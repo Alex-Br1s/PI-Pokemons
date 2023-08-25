@@ -1,0 +1,15 @@
+
+.Searchbar{
+    display: flex;
+    align-items: center;
+}
+
+.Input-search{
+    height: 22px;
+}
+
+.Button-search{
+    height: 28px;
+    margin-left: 5px;
+    background-color: aliceblue ;
+}

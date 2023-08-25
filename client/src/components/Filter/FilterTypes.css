@@ -1,0 +1,14 @@
+
+.Filter-Types-Input{
+    display: flex;
+    justify-content: center;
+    margin: 20px 
+}
+
+.Filter-Types-Box{
+    border: 1px solid skyblue;
+    text-align: center;
+}
+select{
+    cursor: pointer;
+}

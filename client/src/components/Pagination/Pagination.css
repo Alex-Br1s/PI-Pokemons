@@ -1,0 +1,57 @@
+button{
+    cursor: pointer;
+    border-radius: 5px;
+    border: solid 1px black;
+    transition: all 0.2s ease;
+    background-color: transparent;
+}
+
+.is-current{
+    background-color: rgb(117, 117, 117);
+    color: white;
+}
+
+ul{
+    display: flex;
+}
+
+li{
+    color: rgb(255, 255, 255);
+    list-style: none;
+    margin: 5px;
+    background-color: rgb(153, 153, 153);
+}
+
+.Pagination {
+    display: flex;
+  /*   justify-content: center; */
+    align-items: center;
+}
+
+.pagination-link{
+    width: 30px;
+    height: 25px;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.ButtonNext{
+    margin-left: 30px;
+    height: 25px;
+    width: 50px;
+    font-size: 15px;
+    background-color: rgb(145, 152, 155);
+}
+
+.ButtonPrevious{
+    height: 25px;
+    width: 80px;
+    font-size: 15px;
+    background-color: rgb(145, 152, 155);
+}
+
+button:hover{
+    background-color: rgb(117, 117, 117);
+    color: rgb(255, 255, 255);
+    transition: all 0.2s ease-in-out;
+}

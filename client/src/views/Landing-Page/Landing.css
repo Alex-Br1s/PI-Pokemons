@@ -1,0 +1,76 @@
+/* body{
+    background-image: url('https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2019/08/pokemon_10.jpg?tf=3840x');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+} */
+
+.Landing {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+  
+.image-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+  
+.overlay {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+@keyframes slideInOut {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+      color: white;
+    }
+    50% {
+      transform: translateX(0);
+      opacity: 1;
+      color: rgb(255, 135, 6);
+    }
+    100% {
+      transform: translateX(100%);
+      opacity: 0;
+      color: white;
+    }
+  }
+  
+.Made-Alex{
+    font-size: 28px;
+    animation: slideInOut 5s infinite;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.button-home{
+    background: none;
+    border: solid 1px black;
+    height: 35px;
+    width: 60px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 17px;
+    transition: all 0.2s ease-in;
+}
+
+.button-home:hover{
+    background-color: gold;
+    height: 40px;
+    width: 75px;
+    font-size: 20px;
+    transition: all 0.2s ease-in ;
+}
+.arrow{
+    font-size: 20px;
+}

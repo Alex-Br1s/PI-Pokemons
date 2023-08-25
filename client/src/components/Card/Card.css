@@ -1,0 +1,42 @@
+
+.Card{
+    height: 360px;
+    width: 250px;
+    border: solid 2px black;
+    border-radius: 13px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    background-image: url('../../images/font-card-poke.png');
+    background-size: 250px;
+
+}
+.Card img {
+    width: 213px;
+    height: 152px;
+    background-image: url('https://img.freepik.com/vector-premium/fondo-zoom-comico-gris_908696-349.jpg?w=2000');
+    background-size: cover;
+    margin: 7px 0px 0px 1px;
+}
+
+.Card p {
+    margin: 0;
+}
+.Pokemon-Name{
+    padding-left: 10px;
+    font-size: 16px;
+    color: aliceblue;
+}
+
+.Pokemon-Types{
+    padding-top: 95px; 
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+}
+.NavLink{
+    text-decoration: none;
+    color: #000;
+}
+

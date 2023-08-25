@@ -1,0 +1,23 @@
+.Navbar{
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.Form-p {
+    padding-right: 20px;
+    font-size: 20px;
+    
+}
+
+.Nav-Link {
+    text-decoration: none;
+    color: white;
+    transition: all 0.2s ease-in;
+}
+.Nav-Link:hover{
+    color: rgb(255, 55, 0);
+    transition: all 0.2s ease-in;
+}
