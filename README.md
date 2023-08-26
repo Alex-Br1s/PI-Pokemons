@@ -1,6 +1,6 @@
 # PI - Pokemons
 
-<img src='https://www.losreplicantes.com/images/articulos/19000/19148/s3.jpg' width=300px />
+<img src='https://www.losreplicantes.com/images/articulos/19000/19148/s3.jpg' width=300px align=center/>
 
 ## Tecnologías Utilizadas
 
