@@ -14,7 +14,7 @@ const Form = () => {
   const types = useSelector(state => state.selectedTypes);
   useEffect(() => {
     dispatch(pokemonsByTypes())
-    }, [dispatch, types])
+    }, [dispatch])
   
     const [formPokemon, setFormPokemon] = useState({
       name: '',
