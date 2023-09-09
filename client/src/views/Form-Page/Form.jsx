@@ -1,15 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import './Form.css'
 import validation from '../../components/Validation/validation';
 import { pokemonsPost } from '../../redux/actions';
+import {pokemonsByTypes} from '../../redux/actions';
 
 const Form = () => {
-    const types = useSelector(state => state.selectedTypes);
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   
-    const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
+  
+  const types = useSelector(state => state.selectedTypes);
+  useEffect(() => {
+    dispatch(pokemonsByTypes())
+    }, [dispatch, types])
   
     const [formPokemon, setFormPokemon] = useState({
       name: '',

@@ -11,7 +11,7 @@ const Cards = ({ currentPokemons,/*  handlePokemonClick, selectedPokemon  */}) =
             key={poke.id}
             id={poke.id}
             name={poke.name}
-            types={poke.types}
+            types={poke.types.join(', ')}
             image={poke.image}
             /* onClick={() => handlePokemonClick(poke)} */
           />
