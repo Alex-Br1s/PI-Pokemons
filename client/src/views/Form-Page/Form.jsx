@@ -65,7 +65,6 @@ const Form = () => {
       const formErrors = validation(formPokemon);
   
       if (Object.keys(formErrors).length === 0) {
-        console.log(formPokemon)
         dispatch(pokemonsPost(formPokemon))
       } else {
         setErrors(formErrors);

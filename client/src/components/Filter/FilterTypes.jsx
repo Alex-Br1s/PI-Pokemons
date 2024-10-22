@@ -9,7 +9,6 @@ const FilterTypes = ({onFilter}) => {
   const dispatch = useDispatch();
   const pokemons = useSelector(state => state.pokemons);
   const types = useSelector(state => state.selectedTypes);
-  console.log(types)
   const [typeSelected, setTypeSelected] = useState("");
 
   useEffect(() => {

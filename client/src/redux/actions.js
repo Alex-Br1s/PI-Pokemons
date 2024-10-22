@@ -90,10 +90,8 @@ export const pokemonByName = (name) => {
       );
 
       const pokemonResult = [resNamePokemon.data];
-      console.log(pokemonResult);
 
       const pokemonParsed = await infoAllPokemon(pokemonResult);
-      console.log(pokemonParsed);
 
       if (pokemonResult.length > 0) {
         dispatch({ type: NAME_POKEMONS, payload: pokemonParsed });
@@ -107,9 +105,7 @@ export const pokemonByName = (name) => {
 export const pokemonsByTypes = () => {
   return async function (dispatch) {
     const resTypePokemon = await axios.get("https://pokeapi.co/api/v2/type");
-    console.log(resTypePokemon);
     const typePokemon = resTypePokemon.data.results;
-    console.log(typePokemon);
     dispatch({ type: TYPE_POKEMONS, payload: typePokemon });
   };
 };

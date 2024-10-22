@@ -35,7 +35,6 @@ const Home = () => {
   const firstIndex = lastIndex - pokemonsPerPage;
   
   const filteredPokemonsByType = filteredPokemons ? filteredPokemons : pokemons;
-  console.log(filteredPokemonsByType)
   
   const sortedPokemons = [...filteredPokemonsByType].sort((a, b) => {
     // Verifica si ambos Pokémon tienen el campo "name"
@@ -51,7 +50,6 @@ const Home = () => {
 });
 
 
-console.log(filteredPokemonsByType)
 const currentPokemons = sortedPokemons.slice(firstIndex, lastIndex);
 
   useEffect(() => {
@@ -112,7 +110,6 @@ const currentPokemons = sortedPokemons.slice(firstIndex, lastIndex);
     } else if (value === 'db') {
       const filteredPokemons = pokemons.filter(pokemon => typeof pokemon.id === 'string');
       setFilteredPokemons(filteredPokemons);
-      console.log(filteredPokemons)
     } else {
       setFilteredPokemons(null);
     }
