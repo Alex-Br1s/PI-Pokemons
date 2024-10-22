@@ -9,7 +9,7 @@ const FilterTypes = ({onFilter}) => {
   const dispatch = useDispatch();
   const pokemons = useSelector(state => state.pokemons);
   const types = useSelector(state => state.selectedTypes);
-
+  console.log(types)
   const [typeSelected, setTypeSelected] = useState("");
 
   useEffect(() => {
@@ -37,8 +37,8 @@ const FilterTypes = ({onFilter}) => {
       <div className="Filter-Types-Input">
         <select onChange={handleSelectChange}>
           <option value="">All</option>
-          {types.map(type => (
-            <option value={type.name} key={type.id} className='Option-Types'>
+          {types.map((type, index) => (
+            <option value={type.name} key={index} className='Option-Types'>
               {type.name}
             </option>
           ))}

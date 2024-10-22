@@ -1,63 +1,115 @@
-import axios from 'axios'
+import axios from "axios";
+import { infoAllPokemon } from "../utils/pokemons.js";
 
-export const ALL_POKEMONS = 'ALL_POKEMONS'
-export const NAME_POKEMONS = 'NAME_POKEMONS'
-export const TYPE_POKEMONS = 'TYPE_POKEMONS'
-export const POST_POKEMONS = 'POST_POKEMONS'
-
-export const allPokemons = () => {
-  return async function (dispatch){
-    try {
-      const resAllPokemons = await axios.get('http://localhost:3001/pokemons')
-      const allPokemons = resAllPokemons.data
-      dispatch({type: ALL_POKEMONS, payload: allPokemons})
-    } catch (error) {
-      throw alert(error, 'Error al obtener todos los pokemones')
-    }
-  }
-}
-
-export const pokemonByName = (name) => {
-    return async function(dispatch) {
-       try {
-           const resNamePokemon = await axios.get(`http://localhost:3001/pokemons/name?name=${name}`)
-           const namePokemon = resNamePokemon.data
-           const pokemonArray = []
-           pokemonArray.push(namePokemon)
-           if(pokemonArray.length > 0) {
-           dispatch({type: NAME_POKEMONS, payload: pokemonArray})
-        }
-       } catch (error) {
-        return alert('No se encontro el pokemon ' + name)
-       }
-    }
-}
-
-export const pokemonsByTypes = () => {
-    return async function(dispatch) {
-        const resTypePokemon = await axios.get('http://localhost:3001/pokemons/types')
-        const typePokemon = resTypePokemon.data
-        dispatch({type: TYPE_POKEMONS, payload: typePokemon})
-    }
-}
+export const ALL_POKEMONS = "ALL_POKEMONS";
+export const NAME_POKEMONS = "NAME_POKEMONS";
+export const TYPE_POKEMONS = "TYPE_POKEMONS";
+export const POST_POKEMONS = "POST_POKEMONS";
 
 export const pokemonsPost = (pokemon) => {
-    return async function(dispatch) {
-      try {
-        const resPostPokemon = await axios.post('http://localhost:3001/pokemons', pokemon);
-        const postPokemon = resPostPokemon.data;
-        dispatch({ type: POST_POKEMONS, payload: postPokemon });
-        alert('Pokémon creado exitosamente 😊');
-        console.log(resPostPokemon);
-      } catch (error) {
-        if (error.response && error.response.status === 500) {
-          // Error de llave repetida
-          alert('ERROR: Pokemon con este nombre y/o imagen ya existe 😔');
-        } else {
-          // Otros errores
-          console.error('Error al crear el Pokemon:', error.message);
-          alert('ERROR: ' + error.message);
-        }
-      }
-    };
+  return async function (dispatch) {
+    try {
+      let storedPokemons =
+        JSON.parse(localStorage.getItem("createdPokemons")) || [];
+
+      const newPokemon = {
+        ...pokemon,
+        attack: Number(pokemon.attack),
+        defense: Number(pokemon.defense),
+        height: Number(pokemon.height),
+        hp: Number(pokemon.hp),
+        id: String(Date.now()),
+      };
+
+      storedPokemons.push(newPokemon);
+      localStorage.setItem("createdPokemons", JSON.stringify(storedPokemons));
+      dispatch({ type: POST_POKEMONS, payload: storedPokemons });
+      alert("Pokémon creado exitosamente 😊");
+    } catch (error) {
+      console.error("Error al crear el Pokemon:", error.message);
+      throw new Error("Error al crear el Pokemon");
+    }
   };
+};
+
+// Función para obtener los Pokémon guardados en LocalStorage
+const getPokemonsFromLocalStorage = () => {
+  return JSON.parse(localStorage.getItem("createdPokemons")) || [];
+};
+
+export const allPokemons = () => {
+  return async function (dispatch) {
+    try {
+      const resAllPokemons = await axios.get(
+        "https://pokeapi.co/api/v2/pokemon?limit=96"
+      );
+      const allPokemons = resAllPokemons.data.results;
+
+      // Realizamos las solicitudes a cada Pokémon de manera paralela
+      const pokemonsInfo = await Promise.all(
+        allPokemons.map(async (pokemon) => {
+          const resUrl = await axios.get(pokemon.url);
+          return resUrl.data;
+        })
+      );
+
+      const pokemonsParsed = infoAllPokemon(pokemonsInfo);
+
+      const storedPokemons = getPokemonsFromLocalStorage();
+
+      const combinedPokemons = [...pokemonsParsed, ...storedPokemons];
+
+      dispatch({ type: ALL_POKEMONS, payload: combinedPokemons });
+    } catch (error) {
+      console.error("Error al obtener todos los pokemones:", error);
+      // Aquí podrías manejar el error de una mejor manera, como mostrar un mensaje al usuario o enviar una acción de error a Redux
+      dispatch({
+        type: "ERROR_POKEMONS",
+        payload: "Error al obtener los Pokémon",
+      });
+    }
+  };
+};
+
+export const pokemonByName = (name) => {
+  return async function (dispatch) {
+    try {
+      const storedPokemons = getPokemonsFromLocalStorage();
+
+      const pokemonInStorage = storedPokemons.find(
+        (p) => p.name.toLowerCase() === name.toLowerCase()
+      );
+
+      if (pokemonInStorage) {
+        dispatch({ type: NAME_POKEMONS, payload: [pokemonInStorage] });
+        return;
+      }
+
+      const resNamePokemon = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/${name}`
+      );
+
+      const pokemonResult = [resNamePokemon.data];
+      console.log(pokemonResult);
+
+      const pokemonParsed = await infoAllPokemon(pokemonResult);
+      console.log(pokemonParsed);
+
+      if (pokemonResult.length > 0) {
+        dispatch({ type: NAME_POKEMONS, payload: pokemonParsed });
+      }
+    } catch (error) {
+      return alert("No se encontro el pokemon " + name);
+    }
+  };
+};
+
+export const pokemonsByTypes = () => {
+  return async function (dispatch) {
+    const resTypePokemon = await axios.get("https://pokeapi.co/api/v2/type");
+    console.log(resTypePokemon);
+    const typePokemon = resTypePokemon.data.results;
+    console.log(typePokemon);
+    dispatch({ type: TYPE_POKEMONS, payload: typePokemon });
+  };
+};

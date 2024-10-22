@@ -9,7 +9,7 @@ const Navbar = () => {
         <div className="Navbar">
         <LogoPokemons />
         {location.pathname === '*' && <LogoPokemons />}
-        {location.pathname !== '/create' && <NavLink to='/create' className='Nav-Link'><p className="Form-p">Form</p></NavLink> }
+        {location.pathname !== '/create' && <NavLink to='/create' className='Nav-Link'><p className="Form-p">Create pokemon</p></NavLink> }
         </div>
     );
 }

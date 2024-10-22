@@ -26,6 +26,7 @@ const Form = () => {
       types: [],
     });
   
+    
     const handleChange = (event) => {
         setFormPokemon({
           ...formPokemon,

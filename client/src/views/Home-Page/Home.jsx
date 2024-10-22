@@ -26,7 +26,7 @@ const Home = () => {
 //?Estado para Filtrar si es de la db o api
   const [originFilter, setOriginFilter] = useState('')
 //?Estado para mostrar los detalles de los pokemones
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
+//  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
 
 //? Logica de paginado
@@ -35,14 +35,21 @@ const Home = () => {
   const firstIndex = lastIndex - pokemonsPerPage;
   
   const filteredPokemonsByType = filteredPokemons ? filteredPokemons : pokemons;
+  console.log(filteredPokemonsByType)
+  
   const sortedPokemons = [...filteredPokemonsByType].sort((a, b) => {
-  if (orderAlfabetico === 'A-Z') {
-    return a.name.localeCompare(b.name);
-  } else if (orderAlfabetico === 'Z-A') {
-    return b.name.localeCompare(a.name);
+    // Verifica si ambos Pokémon tienen el campo "name"
+  if (a.name && b.name) {
+    if (orderAlfabetico === 'A-Z') {
+      return a.name.localeCompare(b.name);
+    } else if (orderAlfabetico === 'Z-A') {
+      return b.name.localeCompare(a.name);
+    }
   }
-  return filteredPokemonsByType;
+  // Si alguno no tiene "name", no ordenamos (mantiene el orden original)
+  return 0;
 });
+
 
 console.log(filteredPokemonsByType)
 const currentPokemons = sortedPokemons.slice(firstIndex, lastIndex);
@@ -100,11 +107,12 @@ const currentPokemons = sortedPokemons.slice(firstIndex, lastIndex);
     });
 
     if (value === 'api') {
-      const filteredPokemons = pokemons.filter(pokemon => !isNaN(pokemon.id));
+      const filteredPokemons = pokemons.filter(pokemon => typeof pokemon.id === 'number');
       setFilteredPokemons(filteredPokemons);
     } else if (value === 'db') {
-      const filteredPokemons = pokemons.filter(pokemon => isNaN(pokemon.id));
+      const filteredPokemons = pokemons.filter(pokemon => typeof pokemon.id === 'string');
       setFilteredPokemons(filteredPokemons);
+      console.log(filteredPokemons)
     } else {
       setFilteredPokemons(null);
     }
@@ -121,18 +129,18 @@ const currentPokemons = sortedPokemons.slice(firstIndex, lastIndex);
       <Searchbar onSearch={handleSearch} />
       <FilterTypes onFilter={handleFilter} />
 
-    <div className='Filters-Home'>
-      <div className='Filter-Attack'>
-      <h2>Filter the Attack</h2>
+  <div className='Filters-Home'>
+    <div className='Filter-Attack'>
+      <h2>Attack</h2>
       <select onChange={handleAttackFilterChange}>
-        <option value="">All</option>
+        <option value="">Default</option>
         <option value="max">Max Attack</option>
         <option value="min">Min Atackk</option>
       </select>
     </div>
 
-    <div>
-        <h2>Filter the Origin</h2>
+    <div className='filter-origin'>
+        <h2>Origin</h2>
         <select onChange={handleOriginFilterChange}>
           <option value="">All</option>
           <option value="api">Api</option>
@@ -140,10 +148,10 @@ const currentPokemons = sortedPokemons.slice(firstIndex, lastIndex);
         </select>
       </div>
 
-    <div className='Filter-Asc-Des'>
+    <div className='Asc-Des'>
        <h2>Asc or Des</h2>
        <select onChange={handleSortChange} >
-       <option>All</option>
+       <option>Default</option>
        <option value='A-Z'>A-Z</option>
        <option value='Z-A'>Z-A</option>
       </select>
@@ -158,7 +166,7 @@ const currentPokemons = sortedPokemons.slice(firstIndex, lastIndex);
         setCurrentPage={setCurrentPage}
         pokemonsTotal={pokemonsTotal}
       />
-    </div>
+  </div>
   );
 
 }

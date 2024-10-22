@@ -6,7 +6,7 @@ const Pagination = ({ currentPage, pokemonsPerPage, setCurrentPage, pokemonsTota
     for(let i = 1; i <= Math.ceil(pokemonsTotal / pokemonsPerPage); i++){
         pageNumber.push(i)
     }
-
+    console.log(pageNumber)
     const onPreviousPage = () => {
         setCurrentPage( currentPage - 1)
     }
@@ -24,7 +24,7 @@ const Pagination = ({ currentPage, pokemonsPerPage, setCurrentPage, pokemonsTota
             <button className='ButtonPrevious' disabled={currentPage === 1} onClick={onPreviousPage}>Previous</button>
           <ul>
             {pageNumber.map(page => (
-                <li key={page.id}> 
+                <li key={page}> 
                     <button className={`pagination-link ${page === currentPage ? 'is-current' : ''}`}
                     onClick={() => onSpecificPage(page)}>{page}</button>
                 </li>
